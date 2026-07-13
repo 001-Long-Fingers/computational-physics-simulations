@@ -5,6 +5,9 @@ Numerical simulations of classical and chaotic dynamical systems with visualizat
 <img width="754" height="538" alt="pic8" src="https://github.com/user-attachments/assets/a6f43ce1-0ceb-4bca-81a6-d5c9239dda0b" />
 
 
+Website link for this project : https://001-long-fingers.github.io/computational-physics-simulations/
+
+
 
 ---
 
