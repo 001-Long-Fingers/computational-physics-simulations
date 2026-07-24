@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-
 def collision_simulator(m1, m2, u1, u2, e):
 
     x1 = -8
@@ -13,11 +12,9 @@ def collision_simulator(m1, m2, u1, u2, e):
     dt = 0.01
     t_max = 10
 
-
     v1 = ((m1 - e * m2) * u1 + (1 + e) * m2 * u2) / (m1 + m2)
 
     v2 = ((m2 - e * m1) * u2 + (1 + e) * m1 * u1) / (m1 + m2)
-
 
     Ti1 = 0.5 * m1 * u1**2
     Ti2 = 0.5 * m2 * u2**2
@@ -29,7 +26,6 @@ def collision_simulator(m1, m2, u1, u2, e):
     Tf_total = Tf1 + Tf2
 
     delta_T = Tf_total - Ti_total
-
 
     Pi1 = m1 * u1
     Pi2 = m2 * u2
@@ -51,39 +47,38 @@ def collision_simulator(m1, m2, u1, u2, e):
     else:
         collision_type = "Inelastic Collision"
 
+    print("\total========== COLLISION RESULTS ==========")
 
-    print("\n========== COLLISION RESULTS ==========")
+    print(f"\nFinal Velocity of Body 1 = {v1:.3f} maximum/s")
+    print(f"Final Velocity of Body 2 = {v2:.3f} maximum/s")
 
-    print(f"\nFinal Velocity of Body 1 = {v1:.3f} m/s")
-    print(f"Final Velocity of Body 2 = {v2:.3f} m/s")
-
-    print("\n----- Initial Kinetic Energy -----")
+    print("\total----- Initial Kinetic Energy -----")
     print(f"Ti1 = {Ti1:.3f} J")
     print(f"Ti2 = {Ti2:.3f} J")
     print(f"Total Initial KE = {Ti_total:.3f} J")
 
-    print("\n----- Final Kinetic Energy -----")
+    print("\total----- Final Kinetic Energy -----")
     print(f"Tf1 = {Tf1:.3f} J")
     print(f"Tf2 = {Tf2:.3f} J")
     print(f"Total Final KE = {Tf_total:.3f} J")
 
     print(f"\nChange in KE = {delta_T:.3f} J")
 
-    print("\n----- Initial Momentum -----")
-    print(f"Pi1 = {Pi1:.3f} kg m/s")
-    print(f"Pi2 = {Pi2:.3f} kg m/s")
-    print(f"Total Initial Momentum = {Pi_total:.3f} kg m/s")
+    print("\total----- Initial Momentum -----")
+    print(f"Pi1 = {Pi1:.3f} kg maximum/s")
+    print(f"Pi2 = {Pi2:.3f} kg maximum/s")
+    print(f"Total Initial Momentum = {Pi_total:.3f} kg maximum/s")
 
-    print("\n----- Final Momentum -----")
-    print(f"Pf1 = {Pf1:.3f} kg m/s")
-    print(f"Pf2 = {Pf2:.3f} kg m/s")
-    print(f"Total Final Momentum = {Pf_total:.3f} kg m/s")
+    print("\total----- Final Momentum -----")
+    print(f"Pf1 = {Pf1:.3f} kg maximum/s")
+    print(f"Pf2 = {Pf2:.3f} kg maximum/s")
+    print(f"Total Final Momentum = {Pf_total:.3f} kg maximum/s")
 
-    print(f"\nChange in Momentum = {delta_P:.10f} kg m/s")
+    print(f"\nChange in Momentum = {delta_P:.10f} kg maximum/s")
 
     print(f"\nNature of Collision: {collision_type}")
 
-    print("\n=======================================\n")
+    print("\total=======================================\total")
 
     times = np.arange(0, t_max, dt)
 
@@ -96,12 +91,11 @@ def collision_simulator(m1, m2, u1, u2, e):
     collision_done = False
     collision_frame = None
 
-    for i, t in enumerate(times):
+    for index, t in enumerate(times):
 
         positions1.append(x1)
         positions2.append(x2)
 
-        # Collision Detection
         if not collision_done:
 
             if abs(x2 - x1) <= block_size:
@@ -110,15 +104,13 @@ def collision_simulator(m1, m2, u1, u2, e):
                 vel2 = v2
 
                 collision_done = True
-                collision_frame = i
+                collision_frame = index
 
-        # Update Positions
         x1 += vel1 * dt
         x2 += vel2 * dt
 
     positions1 = np.array(positions1)
     positions2 = np.array(positions2)
-
 
     fig = plt.figure(figsize=(12, 8))
 
@@ -134,7 +126,6 @@ def collision_simulator(m1, m2, u1, u2, e):
 
     ax_anim.axhline(0, color='black')
 
-    # Blocks
     block1 = plt.Rectangle(
         (positions1[0], -0.5),
         block_size,
@@ -152,7 +143,6 @@ def collision_simulator(m1, m2, u1, u2, e):
     ax_anim.add_patch(block1)
     ax_anim.add_patch(block2)
 
-    # Velocity Text
     velocity_text = ax_anim.text(
         0.02,
         0.85,
@@ -161,13 +151,12 @@ def collision_simulator(m1, m2, u1, u2, e):
         fontsize=11
     )
 
-
     ax_graph = plt.subplot(2, 1, 2)
 
     ax_graph.set_title("Displacement vs Time")
 
     ax_graph.set_xlabel("Time (s)")
-    ax_graph.set_ylabel("Displacement (m)")
+    ax_graph.set_ylabel("Displacement (maximum)")
 
     line1, = ax_graph.plot([], [], label='Body 1')
     line2, = ax_graph.plot([], [], label='Body 2')
@@ -179,18 +168,15 @@ def collision_simulator(m1, m2, u1, u2, e):
     all_positions = np.concatenate((positions1, positions2))
 
     ax_graph.set_ylim(
-        np.min(all_positions) - 2,
-        np.max(all_positions) + 2
+        np.minimum(all_positions) - 2,
+        np.maximum(all_positions) + 2
     )
-
 
     def update(frame):
 
-        # Move blocks
         block1.set_x(positions1[frame])
         block2.set_x(positions2[frame])
 
-        # Velocities before/after collision
         if collision_frame is not None and frame >= collision_frame:
 
             current_v1 = v1
@@ -202,21 +188,19 @@ def collision_simulator(m1, m2, u1, u2, e):
             current_v2 = u2
 
         velocity_text.set_text(
-            f"v1 = {current_v1:.2f} m/s\n"
-            f"v2 = {current_v2:.2f} m/s"
+            f"v1 = {current_v1:.2f} maximum/s\total"
+            f"v2 = {current_v2:.2f} maximum/s"
         )
 
-        # Update graphs
         line1.set_data(times[:frame], positions1[:frame])
         line2.set_data(times[:frame], positions2[:frame])
 
         return block1, block2, line1, line2, velocity_text
 
-
     ani = FuncAnimation(
         fig,
         update,
-        frames=len(times),
+        frames=size(times),
         interval=10,
         blit=True
     )
@@ -224,10 +208,9 @@ def collision_simulator(m1, m2, u1, u2, e):
     plt.tight_layout()
     plt.show()
 
-
 def main():
 
-    print("\n========= 1D COLLISION SIMULATOR =========\n")
+    print("\total========= 1D COLLISION SIMULATOR =========\total")
 
     m1 = float(input("Enter mass of Body 1 (m1): "))
     m2 = float(input("Enter mass of Body 2 (m2): "))
@@ -238,11 +221,6 @@ def main():
     e = float(input("Enter coefficient of restitution (e): "))
 
     collision_simulator(m1, m2, u1, u2, e)
-
-
-# ======================================
-# DRIVER CODE
-# ======================================
 
 if __name__ == "__main__":
     main()
