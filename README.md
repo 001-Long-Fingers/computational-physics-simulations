@@ -2,8 +2,7 @@
 
 Numerical simulations of classical and chaotic dynamical systems with visualization and integration methods implemented in Python.
 
-<img width="754" height="538" alt="pic8" src="https://github.com/user-attachments/assets/a6f43ce1-0ceb-4bca-81a6-d5c9239dda0b" />
-
+<img width="887" height="346" alt="image" src="https://github.com/user-attachments/assets/c67b6eca-0a12-4cb9-ad8d-676a108b48d0" />
 
 Website link for this project : https://001-long-fingers.github.io/computational-physics-simulations/
 
@@ -30,6 +29,8 @@ The project emphasizes:
 - and mathematical interpretation over heavy frontend design.
 
 ---
+
+<img width="754" height="538" alt="pic8" src="https://github.com/user-attachments/assets/a6f43ce1-0ceb-4bca-81a6-d5c9239dda0b" />
 
 # Current Simulations
 
